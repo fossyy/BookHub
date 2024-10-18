@@ -1,10 +1,9 @@
 package com.example.book.user.service.impl;
 
+import com.example.book.user.dto.UserSessionDTO;
 import com.example.book.user.entity.UserEntity;
 import com.example.book.user.repository.UserRepository;
 import com.example.book.user.service.UserService;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,17 @@ public class UserServiceIMPL implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public final HashMap<String, String> sessions = new HashMap<>();
+    private final HashMap<String, UserSessionDTO> sessions = new HashMap<>();
+
+    @Override
+    public boolean isAuthenticated(String token) {
+        return sessions.containsKey(token);
+    }
+
+    @Override
+    public UserSessionDTO getSessionData(String token) {
+        return sessions.get(token);
+    }
 
     @Override
     public Optional<String> login(String username, String password) {
@@ -29,7 +38,10 @@ public class UserServiceIMPL implements UserService {
         UserEntity userEntity = userRepository.findByUsername(username);
         if (userEntity.getPassword().equals(password)) {
             String token = getSaltString();
-            sessions.put(token, userEntity.getPassword());
+            sessions.put(token, UserSessionDTO.builder()
+                            .id(userEntity.getId())
+                            .username(userEntity.getUsername())
+                    .build());
             return Optional.of(String.valueOf(token));
         } else {
             return Optional.empty();

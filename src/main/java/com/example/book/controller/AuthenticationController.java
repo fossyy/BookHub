@@ -24,8 +24,4 @@ public class AuthenticationController {
         return ResponseEntity.ok().body(userService.register(user.getUsername(), user.getPassword()));
     }
 
-    @GetMapping("/check")
-    public String check(@RequestBody String token) {
-        return userService.sessions.get(token);
-    }
 }

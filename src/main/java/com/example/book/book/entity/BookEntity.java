@@ -22,6 +22,9 @@ public class BookEntity {
     private Integer year;
     private Integer pages;
 
+    @Column(name = "borrow_count", nullable = false, columnDefinition = "int default 0")
+    private Integer borrowCount = 0;
+
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private AuthorEntity author;

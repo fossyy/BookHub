@@ -29,4 +29,14 @@ public class BookServiceIMPL implements BookService {
         }
         return bookDTOList;
     }
+
+    @Override
+    public BookEntity findById(Integer id) {
+        return bookRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public int incrementBorrowCount(Integer id) {
+        return bookRepository.incrementBorrowCount(id);
+    }
 }
