@@ -1,5 +1,7 @@
 package com.example.book.borrow.service.impl;
 
+import com.example.book.authentication.service.AuthenticationService;
+import com.example.book.authentication.service.SessionService;
 import com.example.book.book.entity.BookEntity;
 import com.example.book.book.service.BookService;
 import com.example.book.borrow.dto.BorrowDTO;
@@ -11,7 +13,6 @@ import com.example.book.exception.BorrowOwnershipException;
 import com.example.book.user.dto.UserSessionDTO;
 import com.example.book.user.entity.UserEntity;
 import com.example.book.user.repository.UserRepository;
-import com.example.book.user.service.impl.UserServiceIMPL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class BorrowServiceIMPL implements BorrowService {
     private UserRepository userRepository;
     
     @Autowired
-    private UserServiceIMPL userService;
+    private SessionService sessionService;
     
     @Autowired
     private BorrowMapper borrowMapper;
@@ -40,8 +41,8 @@ public class BorrowServiceIMPL implements BorrowService {
 
     @Override
     public List<BorrowDTO> getBorrowList() {
-        UserSessionDTO session = userService.getSessionData(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        List<BorrowEntity> borrowEntityList = borrowRepository.findByUserId(session.getId());
+        Optional<UserSessionDTO> session = sessionService.getSessionData(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        List<BorrowEntity> borrowEntityList = borrowRepository.findByUserId(session.get().getId());
         List<BorrowDTO> borrowDTOList = new ArrayList<>();
         borrowEntityList.stream().map(borrowMapper::toBorrowDTO).forEach(borrowDTOList::add);
         return borrowDTOList;
@@ -49,10 +50,10 @@ public class BorrowServiceIMPL implements BorrowService {
 
     @Override
     public BorrowDTO addBorrow(Integer BookID) {
-        UserSessionDTO session = userService.getSessionData(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        Optional<UserSessionDTO> session = sessionService.getSessionData(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
         BorrowEntity borrowData = new BorrowEntity();
 
-        Optional<UserEntity> userEntity = userRepository.findById(session.getId());
+        Optional<UserEntity> userEntity = userRepository.findById(session.get().getId());
         if (userEntity.isEmpty()) {
             return null;
         }
@@ -69,8 +70,8 @@ public class BorrowServiceIMPL implements BorrowService {
 
     @Override
     public BorrowDTO getBorrow(Integer borrowID) {
-        UserSessionDTO session = userService.getSessionData(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        BorrowEntity borrowEntity = borrowRepository.findByUserIdAndId(session.getId(), borrowID);
+        Optional<UserSessionDTO> session = sessionService.getSessionData(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        BorrowEntity borrowEntity = borrowRepository.findByUserIdAndId(session.get().getId(), borrowID);
         if (borrowEntity == null) {
             throw new BorrowOwnershipException();
         }

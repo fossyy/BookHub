@@ -1,7 +1,8 @@
 package com.example.book.security;
 
 
-import com.example.book.user.service.impl.UserServiceIMPL;
+import com.example.book.authentication.service.AuthenticationService;
+import com.example.book.authentication.service.SessionService;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -21,7 +23,7 @@ import java.io.IOException;
 public class BearerTokenFilter extends OncePerRequestFilter {
 
     @Autowired
-    private UserServiceIMPL userService;
+    private SessionService sessionService;
 
     @Override
     public void doFilterInternal(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain chain) throws ServletException, IOException {
@@ -32,7 +34,7 @@ public class BearerTokenFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
         } else if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
-            if (userService.isAuthenticated(token)) {
+            if (sessionService.isTokenValid(token)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(token, null, null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 chain.doFilter(request, response);
