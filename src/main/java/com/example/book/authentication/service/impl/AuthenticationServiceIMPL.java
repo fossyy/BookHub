@@ -1,7 +1,8 @@
 package com.example.book.authentication.service.impl;
 
 import com.example.book.authentication.service.AuthenticationService;
-import com.example.book.authentication.service.SessionService;
+import com.example.book.exception.AuthenticationException;
+import com.example.book.session.service.SessionService;
 import com.example.book.user.dto.UserSessionDTO;
 import com.example.book.user.entity.UserEntity;
 import com.example.book.user.repository.UserRepository;
@@ -45,12 +46,15 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
                     .build());
             return Optional.of(token);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new AuthenticationException();
         }
     }
 
     @Override
     public Optional<UserEntity> register(String username, String password) {
+        if (userRepository.existsByUsername(username)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username is already in use");
+        }
         UserEntity userEntity = UserEntity.builder()
                 .username(username)
                 .password(password)

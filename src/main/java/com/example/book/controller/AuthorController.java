@@ -1,7 +1,7 @@
 package com.example.book.controller;
 
 import com.example.book.author.dto.AuthorDTO;
-import com.example.book.author.service.impl.AuthorServiceIMPL;
+import com.example.book.author.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/author")
 public class AuthorController {
     @Autowired
-    private AuthorServiceIMPL authorService;
+    private AuthorService authorService;
 
     @GetMapping
     public ResponseEntity<List<AuthorDTO>> getAuthors() {

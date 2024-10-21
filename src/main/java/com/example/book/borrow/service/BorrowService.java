@@ -1,9 +1,6 @@
 package com.example.book.borrow.service;
 
-import com.example.book.book.entity.BookEntity;
 import com.example.book.borrow.dto.BorrowDTO;
-import com.example.book.borrow.entity.BorrowEntity;
-import com.example.book.user.dto.UserSessionDTO;
 
 import java.util.List;
 

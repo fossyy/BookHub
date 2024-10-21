@@ -1,5 +1,6 @@
-package com.example.book.authentication.service;
+package com.example.book.session.service.impl;
 
+import com.example.book.session.service.SessionService;
 import com.example.book.user.dto.UserSessionDTO;
 import org.springframework.stereotype.Service;
 
@@ -7,7 +8,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 @Service
-public class SessionService {
+public class SessionServiceIMPL implements SessionService {
 
     private final HashMap<String, UserSessionDTO> sessions = new HashMap<>();
 

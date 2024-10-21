@@ -1,6 +1,7 @@
 package com.example.book.borrow.entity;
 
 import com.example.book.book.entity.BookEntity;
+import com.example.book.returns.entity.ReturnsEntity;
 import com.example.book.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,6 +26,9 @@ public class BorrowEntity {
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
     private BookEntity book;
+
+    @OneToOne(mappedBy = "borrowingEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
+    private ReturnsEntity returnEntity;
 
     private LocalDate borrowedDate;
 }

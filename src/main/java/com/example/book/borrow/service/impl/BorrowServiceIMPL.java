@@ -1,7 +1,5 @@
 package com.example.book.borrow.service.impl;
 
-import com.example.book.authentication.service.AuthenticationService;
-import com.example.book.authentication.service.SessionService;
 import com.example.book.book.entity.BookEntity;
 import com.example.book.book.service.BookService;
 import com.example.book.borrow.dto.BorrowDTO;
@@ -10,6 +8,8 @@ import com.example.book.borrow.mapper.BorrowMapper;
 import com.example.book.borrow.repository.BorrowRepository;
 import com.example.book.borrow.service.BorrowService;
 import com.example.book.exception.BorrowOwnershipException;
+import com.example.book.returns.service.ReturnsService;
+import com.example.book.session.service.SessionService;
 import com.example.book.user.dto.UserSessionDTO;
 import com.example.book.user.entity.UserEntity;
 import com.example.book.user.repository.UserRepository;
@@ -38,6 +38,9 @@ public class BorrowServiceIMPL implements BorrowService {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private ReturnsService returnsService;
 
     @Override
     public List<BorrowDTO> getBorrowList() {
@@ -75,6 +78,7 @@ public class BorrowServiceIMPL implements BorrowService {
         if (borrowEntity == null) {
             throw new BorrowOwnershipException();
         }
+
         return borrowMapper.toBorrowDTO(borrowEntity);
     }
 }
