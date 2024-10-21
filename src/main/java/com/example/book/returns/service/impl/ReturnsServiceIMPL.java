@@ -2,6 +2,7 @@ package com.example.book.returns.service.impl;
 
 import com.example.book.borrow.entity.BorrowEntity;
 import com.example.book.borrow.repository.BorrowRepository;
+import com.example.book.exception.AlreadyReturned;
 import com.example.book.exception.BorrowNotFound;
 import com.example.book.returns.entity.ReturnsEntity;
 import com.example.book.returns.repository.ReturnsRepository;
@@ -23,9 +24,8 @@ public class ReturnsServiceIMPL implements ReturnsService {
     public ReturnsEntity returnBook(Integer borrowId) {
         BorrowEntity borrowEntity = borrowRepository.findById(borrowId).orElseThrow(BorrowNotFound::new);
 
-        // TODO: Make already returned error
         if (returnsRepository.existsByBorrowingEntity(borrowEntity)) {
-            throw new RuntimeException("Already returned");
+            throw new AlreadyReturned();
         }
 
         ReturnsEntity returnsEntity = ReturnsEntity.builder()

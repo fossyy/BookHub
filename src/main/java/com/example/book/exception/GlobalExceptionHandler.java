@@ -21,4 +21,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleAuthenticationException(Exception ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
+
+    @ExceptionHandler(AlreadyReturned.class)
+    public ResponseEntity<String> handleAlreadyReturned(Exception ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
 }
