@@ -1,7 +1,7 @@
 package com.example.book.controller;
 
-import com.example.book.authentication.service.AuthenticationService;
-import com.example.book.user.entity.UserEntity;
+import com.example.book.service.AuthenticationService;
+import com.example.book.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

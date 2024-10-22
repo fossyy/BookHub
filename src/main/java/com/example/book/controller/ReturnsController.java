@@ -1,11 +1,11 @@
 package com.example.book.controller;
 
-import com.example.book.borrow.repository.BorrowRepository;
+import com.example.book.repository.BorrowRepository;
 import com.example.book.exception.BorrowNotFound;
-import com.example.book.returns.dto.ReturnsDTO;
-import com.example.book.returns.entity.ReturnsEntity;
-import com.example.book.returns.mapper.ReturnsMapper;
-import com.example.book.returns.service.ReturnsService;
+import com.example.book.dto.ReturnsDTO;
+import com.example.book.entity.ReturnsEntity;
+import com.example.book.mapper.ReturnsMapper;
+import com.example.book.service.ReturnsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,7 +1,7 @@
 package com.example.book.controller;
 
-import com.example.book.author.dto.AuthorDTO;
-import com.example.book.author.service.AuthorService;
+import com.example.book.dto.AuthorDTO;
+import com.example.book.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

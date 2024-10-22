@@ -1,7 +1,7 @@
 package com.example.book.security;
 
-import com.example.book.user.entity.UserEntity;
-import com.example.book.user.repository.UserRepository;
+import com.example.book.entity.UserEntity;
+import com.example.book.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

@@ -1,7 +1,7 @@
 package com.example.book.security;
 
 
-import com.example.book.session.service.SessionService;
+import com.example.book.service.SessionService;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

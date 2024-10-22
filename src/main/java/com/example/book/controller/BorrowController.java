@@ -1,8 +1,8 @@
 package com.example.book.controller;
 
-import com.example.book.borrow.dto.BorrowDTO;
-import com.example.book.borrow.mapper.BorrowMapper;
-import com.example.book.borrow.service.BorrowService;
+import com.example.book.dto.BorrowDTO;
+import com.example.book.mapper.BorrowMapper;
+import com.example.book.service.BorrowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package com.example.book.controller;
 
-import com.example.book.stats.dto.StatsDTO;
-import com.example.book.stats.service.StatsService;
+import com.example.book.dto.StatsDTO;
+import com.example.book.service.StatsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
