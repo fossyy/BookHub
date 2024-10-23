@@ -1,10 +1,6 @@
 package com.example.book.controller;
 
-import com.example.book.repository.BorrowRepository;
-import com.example.book.exception.BorrowNotFound;
 import com.example.book.dto.ReturnsDTO;
-import com.example.book.entity.ReturnsEntity;
-import com.example.book.mapper.ReturnsMapper;
 import com.example.book.service.ReturnsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReturnsController {
     @Autowired
     private ReturnsService returnsService;
-
-    @Autowired
-    private BorrowRepository borrowRepository;
-
-    @Autowired
-    private ReturnsMapper returnsMapper;
 
     @PostMapping("/{borrowID}")
     public ReturnsDTO returnBorrowedBook(@PathVariable Integer borrowID) {

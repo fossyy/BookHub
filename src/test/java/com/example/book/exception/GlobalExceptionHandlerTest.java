@@ -3,25 +3,11 @@ package com.example.book.exception;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GlobalExceptionHandlerTest {
-    @ExceptionHandler(BorrowOwnershipException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<String> handleBorrowOwnershipException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
-    }
-
     private final GlobalExceptionHandler globalExceptionHandler = new GlobalExceptionHandler();
-
-    @ExceptionHandler(AuthenticationException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<String> handleAuthenticationException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
-    }
 
     @Test
     void handleGeneralException() {

@@ -1,5 +1,6 @@
 package com.example.book.service.impl;
 
+import com.example.book.dto.UserDTO;
 import com.example.book.service.AuthenticationService;
 import com.example.book.exception.AuthenticationException;
 import com.example.book.service.SessionService;
@@ -13,7 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -32,7 +32,7 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
     }
 
     @Override
-    public String login(UserEntity user) {
+    public String login(UserDTO user) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())

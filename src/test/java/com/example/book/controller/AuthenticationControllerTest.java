@@ -49,7 +49,7 @@ public class AuthenticationControllerTest {
 
         when(authenticationService.login(any())).thenReturn("token");
 
-        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/api/auth")
+        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(user)));
 
@@ -65,7 +65,7 @@ public class AuthenticationControllerTest {
                 .build();
         when(authenticationService.register(any(), any())).thenReturn(user);
 
-        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/auth")
+        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(user)));
 

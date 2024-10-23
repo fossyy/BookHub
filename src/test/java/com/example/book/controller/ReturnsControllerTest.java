@@ -36,12 +36,6 @@ class ReturnsControllerTest {
     @MockBean
     private SessionService sessionService;
 
-    @MockBean
-    private BorrowRepository borrowRepository;
-
-    @MockBean
-    private ReturnsMapper returnsMapper;
-
     @Test
     public void testAddReturnData() throws Exception {
         ReturnsDTO returnData = ReturnsDTO.builder().id(1).borrowId(1).returnDate(LocalDate.now()).build();

@@ -1,5 +1,6 @@
 package com.example.book.service.impl;
 
+import com.example.book.dto.UserDTO;
 import com.example.book.dto.UserSessionDTO;
 import com.example.book.entity.UserEntity;
 import com.example.book.exception.AuthenticationException;
@@ -41,12 +42,18 @@ class AuthenticationServiceIMPLTest {
 
     @Test
     public void testLogin_Success() {
-        UserEntity mockUser = UserEntity.builder()
+        UserEntity mockUserEntity = UserEntity.builder()
+                .id(1)
                 .username("testuser")
                 .password("password")
                 .build();
 
-        when(userRepository.findByUsername("testuser")).thenReturn(mockUser);
+        UserDTO mockUser = UserDTO.builder()
+                .username(mockUserEntity.getUsername())
+                .password(mockUserEntity.getPassword())
+                .build();
+
+        when(userRepository.findByUsername("testuser")).thenReturn(mockUserEntity);
 
         String token = authenticationService.login(mockUser);
 
@@ -56,7 +63,7 @@ class AuthenticationServiceIMPLTest {
 
     @Test
     public void testLogin_Failure_AuthenticationException() {
-        UserEntity mockUser = UserEntity.builder()
+        UserDTO mockUser = UserDTO.builder()
                 .username("testuser")
                 .password("password")
                 .build();

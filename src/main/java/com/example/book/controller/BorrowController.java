@@ -1,7 +1,6 @@
 package com.example.book.controller;
 
 import com.example.book.dto.BorrowDTO;
-import com.example.book.mapper.BorrowMapper;
 import com.example.book.service.BorrowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +13,6 @@ import java.util.List;
 public class BorrowController {
     @Autowired
     private BorrowService borrowService;
-
-    @Autowired
-    private BorrowMapper borrowMapper;
 
     @GetMapping
     public ResponseEntity<List<BorrowDTO>> getMyBorrowings() {

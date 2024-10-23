@@ -38,9 +38,6 @@ class BorrowControllerTest {
     @MockBean
     private SessionService sessionService;
 
-    @MockBean
-    private BorrowMapper borrowMapper;
-
     @Test
     public void testGetMyBorrowings() throws Exception {
         List<BorrowDTO> borrowings = List.of(
