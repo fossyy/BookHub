@@ -1,6 +1,5 @@
 package com.example.book.entity;
 
-import com.example.book.entity.BookEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

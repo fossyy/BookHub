@@ -1,9 +1,8 @@
 package com.example.book.service;
 
-import com.example.book.entity.ReturnsEntity;
+import com.example.book.dto.ReturnsDTO;
 
 public interface ReturnsService {
-    ReturnsEntity returnBook(Integer borrowId);
-    ReturnsEntity findReturnByBorrowId(Integer borrowId);
+    ReturnsDTO returnBook(Integer borrowId);
     boolean isBookReturned(Integer borrowId);
 }

@@ -10,4 +10,8 @@ class BookApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	public void applicationContextTest() {
+		BookApplication.main(new String[] {});
+	}
 }

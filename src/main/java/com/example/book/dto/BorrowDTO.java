@@ -1,15 +1,13 @@
 package com.example.book.dto;
 
-import com.example.book.dto.BookDTO;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
+@Data
 @Builder
-@Setter
-@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class BorrowDTO {
     private Integer id;
     private Integer userId;

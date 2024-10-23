@@ -1,6 +1,8 @@
 package com.example.book.service.impl;
 
+import com.example.book.dto.ReturnsDTO;
 import com.example.book.entity.BorrowEntity;
+import com.example.book.mapper.ReturnsMapper;
 import com.example.book.repository.BorrowRepository;
 import com.example.book.exception.AlreadyReturned;
 import com.example.book.exception.BorrowNotFound;
@@ -20,8 +22,11 @@ public class ReturnsServiceIMPL implements ReturnsService {
     @Autowired
     private ReturnsRepository returnsRepository;
 
+    @Autowired
+    private ReturnsMapper returnsMapper;
+
     @Override
-    public ReturnsEntity returnBook(Integer borrowId) {
+    public ReturnsDTO returnBook(Integer borrowId) {
         BorrowEntity borrowEntity = borrowRepository.findById(borrowId).orElseThrow(BorrowNotFound::new);
 
         if (returnsRepository.existsByBorrowingEntity(borrowEntity)) {
@@ -33,12 +38,7 @@ public class ReturnsServiceIMPL implements ReturnsService {
                 .returnDate(LocalDate.now())
                 .build();
 
-        return returnsRepository.save(returnsEntity);
-    }
-
-    @Override
-    public ReturnsEntity findReturnByBorrowId(Integer borrowId) {
-        return null;
+        return returnsMapper.toReturnsDto(returnsRepository.save(returnsEntity));
     }
 
     @Override

@@ -26,8 +26,6 @@ public class ReturnsController {
 
     @PostMapping("/{borrowID}")
     public ReturnsDTO returnBorrowedBook(@PathVariable Integer borrowID) {
-        borrowRepository.findById(borrowID).orElseThrow(BorrowNotFound::new);
-        ReturnsEntity returnsEntity = returnsService.returnBook(borrowID);
-        return returnsMapper.toReturnsDto(returnsEntity);
+        return returnsService.returnBook(borrowID);
     }
 }

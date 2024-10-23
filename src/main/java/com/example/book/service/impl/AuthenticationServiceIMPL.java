@@ -32,26 +32,26 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
     }
 
     @Override
-    public Optional<String> login(String username, String password) {
+    public String login(UserEntity user) {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password)
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
             );
 
-            UserEntity userEntity = userRepository.findByUsername(username);
+            UserEntity userEntity = userRepository.findByUsername(user.getUsername());
             String token = getSaltString();
             sessionService.addSession(token, UserSessionDTO.builder()
                     .id(userEntity.getId())
                     .username(userEntity.getUsername())
                     .build());
-            return Optional.of(token);
+            return token;
         } catch (Exception e) {
             throw new AuthenticationException();
         }
     }
 
     @Override
-    public Optional<UserEntity> register(String username, String password) {
+    public UserEntity register(String username, String password) {
         if (userRepository.existsByUsername(username)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username is already in use");
         }
@@ -59,11 +59,13 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
                 .username(username)
                 .password(password)
                 .build();
-        return Optional.of(userRepository.save(userEntity));
+
+        return userRepository.save(userEntity);
     }
 
     // Random token generator
-    protected String getSaltString() {
+    @Override
+    public String getSaltString() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();

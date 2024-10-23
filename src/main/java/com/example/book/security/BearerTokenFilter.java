@@ -15,10 +15,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class BearerTokenFilter extends OncePerRequestFilter {
+
+    private static final List<String> EXCLUDED_PATHS = Arrays.asList(
+            "/api/auth",
+            "/api/book",
+            "swagger",
+            "/v3/api-docs"
+    );
 
     @Autowired
     private SessionService sessionService;
@@ -26,9 +35,7 @@ public class BearerTokenFilter extends OncePerRequestFilter {
     @Override
     public void doFilterInternal(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain chain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-        if (request.getServletPath().contains("/api/auth")) {
-            chain.doFilter(request, response);
-        } else if (request.getServletPath().contains("/api/book")) {
+        if (EXCLUDED_PATHS.stream().anyMatch(request.getServletPath()::contains)) {
             chain.doFilter(request, response);
         } else if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);

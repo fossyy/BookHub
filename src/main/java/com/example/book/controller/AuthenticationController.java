@@ -15,12 +15,12 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @GetMapping
-    public ResponseEntity<Optional<String>> login(@RequestBody UserEntity user) {
-        return ResponseEntity.ok().body(authenticationService.login(user.getUsername(), user.getPassword()));
+    public ResponseEntity<String> login(@RequestBody UserEntity user) {
+        return ResponseEntity.ok().body(authenticationService.login(user));
     }
 
     @PostMapping
-    public ResponseEntity<Optional<UserEntity>> register(@RequestBody UserEntity user) {
+    public ResponseEntity<UserEntity> register(@RequestBody UserEntity user) {
         return ResponseEntity.ok().body(authenticationService.register(user.getUsername(), user.getPassword()));
     }
 }
