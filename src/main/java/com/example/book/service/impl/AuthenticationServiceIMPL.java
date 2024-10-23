@@ -51,13 +51,13 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
     }
 
     @Override
-    public UserEntity register(String username, String password) {
-        if (userRepository.existsByUsername(username)) {
+    public UserEntity register(UserDTO user) {
+        if (userRepository.existsByUsername(user.getUsername())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username is already in use");
         }
         UserEntity userEntity = UserEntity.builder()
-                .username(username)
-                .password(password)
+                .username(user.getUsername())
+                .password(user.getPassword())
                 .build();
 
         return userRepository.save(userEntity);

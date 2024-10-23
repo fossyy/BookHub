@@ -1,5 +1,6 @@
 package com.example.book.controller;
 
+import com.example.book.dto.UserDTO;
 import com.example.book.entity.UserEntity;
 import com.example.book.service.AuthenticationService;
 import com.example.book.service.SessionService;
@@ -42,16 +43,22 @@ public class AuthenticationControllerTest {
 
     @Test
     public void testLogin() throws Exception {
-        UserEntity user = UserEntity.builder()
+        UserEntity userEntity = UserEntity.builder()
+                .id(1)
                 .username("username")
                 .password("password")
+                .build();
+
+        UserDTO userDTO = UserDTO.builder()
+                .username(userEntity.getUsername())
+                .password(userEntity.getPassword())
                 .build();
 
         when(authenticationService.login(any())).thenReturn("token");
 
         ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)));
+                        .content(objectMapper.writeValueAsString(userDTO)));
 
         response.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("token"));
@@ -59,15 +66,22 @@ public class AuthenticationControllerTest {
 
     @Test
     public void testRegister() throws Exception {
-        UserEntity user = UserEntity.builder()
+        UserEntity userEntity = UserEntity.builder()
+                .id(1)
                 .username("username")
                 .password("password")
                 .build();
-        when(authenticationService.register(any(), any())).thenReturn(user);
+
+        UserDTO userDTO = UserDTO.builder()
+                .username(userEntity.getUsername())
+                .password(userEntity.getPassword())
+                .build();
+
+        when(authenticationService.register(any())).thenReturn(userEntity);
 
         ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)));
+                        .content(objectMapper.writeValueAsString(userDTO)));
 
         response.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("username"));

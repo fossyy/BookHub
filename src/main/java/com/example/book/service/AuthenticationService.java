@@ -5,6 +5,6 @@ import com.example.book.entity.UserEntity;
 
 public interface AuthenticationService {
     String login(UserDTO user);
-    UserEntity register(String username, String password);
+    UserEntity register(UserDTO user);
     String getSaltString();
 }

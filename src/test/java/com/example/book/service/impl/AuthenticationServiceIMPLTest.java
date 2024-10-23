@@ -73,27 +73,33 @@ class AuthenticationServiceIMPLTest {
 
     @Test
     public void testRegister_Success() {
-        String username = "newuser";
-        String password = "password";
-        when(userRepository.existsByUsername(username)).thenReturn(false);
-        UserEntity mockUser = UserEntity.builder().username(username).password(password).build();
+        UserDTO userDTO = UserDTO.builder()
+                .username("newuser")
+                .password("password")
+                .build();
+
+        when(userRepository.existsByUsername(userDTO.getUsername())).thenReturn(false);
+        UserEntity mockUser = UserEntity.builder().username(userDTO.getUsername()).password(userDTO.getPassword()).build();
         when(userRepository.save(any(UserEntity.class))).thenReturn(mockUser);
 
-        UserEntity registeredUser = authenticationService.register(username, password);
+        UserEntity registeredUser = authenticationService.register(userDTO);
 
         assertNotNull(registeredUser);
-        assertEquals(username, registeredUser.getUsername());
+        assertEquals(userDTO.getUsername(), registeredUser.getUsername());
         verify(userRepository, times(1)).save(any(UserEntity.class));
     }
 
     @Test
     public void testRegister_Failure_UsernameConflict() {
-        String username = "existinguser";
-        String password = "password";
+        UserDTO userDTO = UserDTO.builder()
+                .username("existinguser")
+                .password("password")
+                .build();
+
         when(userRepository.existsByUsername(any())).thenReturn(true);
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
-                authenticationService.register(username, password));
+                authenticationService.register(userDTO));
         assertEquals("Username is already in use", exception.getReason());
     }
 
